@@ -1,0 +1,23 @@
+#
+# TODO
+# This file should be used to set all paths and important variables
+# But for now this is unused
+# Someone has to write class(or methods in SettingsManagerFramework) to manage those variables and paths
+#
+settings:
+    routing_path: "app/Config/routing.yaml"
+    database_path: "app/Config/config.yaml"
+
+#settings:
+#    core:
+#        routing: "Config/routing.yaml"
+#        tempalate_path: "User/Templates/"
+#        dsn:
+#    database:
+#        host:
+#        password:
+#        engine:
+#    relative_paths:
+#        -
+#    absolute_paths:
+#        -

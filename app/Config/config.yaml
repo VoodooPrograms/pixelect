@@ -1,0 +1,4 @@
+
+
+config:
+    template_path: "app/User/Templates/"

@@ -1,0 +1,19 @@
+{
+    "name": "pixelect/pixelect",
+    "description": "Website for 2d pixel artists",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Quetzal\\": "app"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "require": {
+        "php": ">=7.3",
+        "quetzal/dependency-injection": "^0.1.0",
+        "symfony/yaml": "^5.2",
+        "quetzal/settings-manager": "^0.1.2"
+    }
+}
