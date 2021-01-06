@@ -11,6 +11,7 @@ namespace Quetzal\Core;
  */
 
 use Quetzal\Core\Http\Request;
+use Quetzal\Core\ViewSupport\ViewSupport;
 
 abstract class Controller
 {
@@ -37,10 +38,7 @@ abstract class Controller
             if (extract($parr, EXTR_SKIP) != sizeof($parr))
                 return 1; //fail
             $vs = new ViewSupport();  //important $vs after extract
-            ob_start();
             include $template_path;
-            $output = ob_get_clean();
-            print $output;
             return 0; //success
         } else
             return 1; //fail
