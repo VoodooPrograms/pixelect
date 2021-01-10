@@ -4,7 +4,7 @@
 namespace Quetzal\Core;
 
 use DI\DependencyInjection\Container;
-use SM\SettingsManager\SettingsManager;
+use Quetzal\Core\Database\Database;
 
 class App
 {
@@ -15,7 +15,7 @@ class App
     {
         $this->reg = Register::instance();
         $this->core_services = new Container();
-        $this->registerCoreServices();
+//        $this->registerCoreServices();
     }
 
     public static function run() : void
@@ -23,10 +23,15 @@ class App
         $app = new App();
         $appHelper = $app->getAppHelper();
         $appHelper->setup();
+        $app->registerCoreServices();
         $app->handleRequest();
     }
 
+    /**
+     * TODO: Consider DI instead of Registry
+     */
     public function registerCoreServices() {
+        $this->reg->setDatabase(new Database());
 //        $this->core_services->set(SettingsManager::init());
     }
 

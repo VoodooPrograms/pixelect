@@ -20,6 +20,7 @@ class Register
     private $request;
     private $settingsManager;
     private $resolver;
+    private $database;
 
 
     private function __construct()
@@ -127,4 +128,21 @@ class Register
     {
         $this->resolver = $resolver;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDatabase()
+    {
+        return $this->database;
+    }
+
+    /**
+     * @param mixed $database
+     */
+    public function setDatabase($database): void
+    {
+        $this->database = $database;
+    }
+
 }

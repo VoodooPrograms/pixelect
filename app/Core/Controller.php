@@ -20,6 +20,11 @@ abstract class Controller
     final public function __construct()
     {
         $this->registry = Register::instance();
+        $this->dependencies();
+    }
+
+    protected function dependencies() {
+
     }
 
     public function execute(Request $request, string $action)
