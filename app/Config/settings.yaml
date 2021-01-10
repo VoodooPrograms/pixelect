@@ -6,7 +6,8 @@
 #
 settings:
     routing_path: "app/Config/routing.yaml"
-    database_path: "app/Config/config.yaml"
+    config_path: "app/Config/config.yaml"
+    database_path: "app/Config/database.yaml"
 
 #settings:
 #    core:
