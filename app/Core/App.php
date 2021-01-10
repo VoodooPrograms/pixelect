@@ -27,7 +27,7 @@ class App
     }
 
     public function registerCoreServices() {
-        $this->core_services->set(SettingsManager::init());
+//        $this->core_services->set(SettingsManager::init());
     }
 
     private function getAppHelper(): ?AppHelper
