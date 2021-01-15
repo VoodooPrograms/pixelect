@@ -45,11 +45,21 @@ routing:
         class: Quetzal\User\Controllers\SimpleController
         action: index
         method: GET
-    login:
+    login_view:
         path: /login
         class: Quetzal\User\Controllers\AuthController
         action: loginView
         method: GET
+    login:
+        path: /login
+        class: Quetzal\User\Controllers\AuthController
+        action: loginUser
+        method: POST
+    register:
+        path: /register
+        class: Quetzal\User\Controllers\AuthController
+        action: registerUser
+        method: POST
     main-page:
         path: /main
         class: Quetzal\User\Controllers\MainController
@@ -60,3 +70,4 @@ routing:
         class: Quetzal\User\Controllers\PixelEditorController
         action: index
         method: GET
+        guard: auth

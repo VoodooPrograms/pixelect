@@ -120,7 +120,10 @@ class ViewSupport
                     echo "Error: not printable";
         } else if ($this->isPrintable($var)) {
             echo $var;
-        } else
-            echo "Error: not printable";
+        }
+    }
+
+    public function session(string $key) {
+        return $this->registry->getRequest()->getSession()->get($key);
     }
 }

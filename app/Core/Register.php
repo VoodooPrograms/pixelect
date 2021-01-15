@@ -10,6 +10,7 @@ namespace Quetzal\Core;
  */
 
 use Quetzal\Core\Http\Request;
+use Quetzal\Core\Security\Guard;
 
 class Register
 {
@@ -21,6 +22,7 @@ class Register
     private $settingsManager;
     private $resolver;
     private $database;
+    private $guard;
 
 
     private function __construct()
@@ -143,6 +145,22 @@ class Register
     public function setDatabase($database): void
     {
         $this->database = $database;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGuard(): Guard
+    {
+        return $this->guard;
+    }
+
+    /**
+     * @param mixed $guard
+     */
+    public function setGuard($guard): void
+    {
+        $this->guard = $guard;
     }
 
 }

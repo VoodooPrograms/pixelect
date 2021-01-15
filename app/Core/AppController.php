@@ -5,6 +5,7 @@ namespace Quetzal\Core;
 
 use Quetzal\Core\Http\Request;
 use Quetzal\Core\Routing\UrlResolver;
+use Quetzal\Core\Security\Guard;
 
 class AppController
 {
@@ -16,10 +17,9 @@ class AppController
         $this->reg = Register::instance();
         $this->reg->setAppcontroller($this);
         $this->setmgr = $this->reg->getSettingsManager();
+        $this->reg->setGuard(new Guard());
     }
 
-    //todo Check how to test
-    // Maybe it should be as service DI
     public function getController(Request $request): array
     {
         if (isset($_SERVER["REQUEST_METHOD"])) {
@@ -27,7 +27,7 @@ class AppController
         } else {
             //$resolver = new UrlResolver();
             // $request = new CliRequest();
-            // There will be more type of request eg. CliRequest, ApiRequest
+            // There will be more type of request eg. CliRequest
         }
         $routing = $this->reg->getSettingsManager()['routing']['routing'];
         $controler = $this->reg->getResolver()->match($request, $routing);

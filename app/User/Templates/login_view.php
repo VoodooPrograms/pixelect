@@ -30,19 +30,23 @@
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="187" height="187" viewBox="0 0 187 187">
                 <image id="icons8-pixel-heart-100" width="187" height="187" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABmJLR0QA/wD/AP+gvaeTAAABKElEQVR4nO3cUQrCMBQAwSje/8p6gWrFELLqzL9pYHmQIO0YAAAAQMdl4dr3yd+v3NsY0f1dVyzK5wSJESRGkBhBYgSJESRm5ix9do6fPafPrl/f3yETEiNIjCAxgsQIEiNIjCAxr87Kq8/xs35yfyYkRpAYQWIEiREkRpAYQWJuuzcwYfc9YwkTEiNIjCAxgsQIEiNIjCAxgsQIEiNIjCAxgsQIEiNIjCAx5fdD6rwf8g8EiREkRpAYQWIEiREkZuf3sur3lC37NyExgsQIEiNIjCAxgsQIErPzLrD7nrL7+YdMSIwgMYLECBIjSIwgMYLElP+TqH+3dwkTEiNIjCAxgsQIEiNIjCAxybP4m77ynnHGhMQIEiNIjCAxgsQIEiMIAAAAwFMP2xsSnLHMAnoAAAAASUVORK5CYII="/>
             </svg>
-            <form class="register-form" id="register-form">
-                <input type="text" placeholder="name"/>
-                <input type="password" placeholder="password"/>
-                <input type="text" placeholder="email address"/>
+            <form class="register-form" id="register-form" action="/register" method="POST">
+                <input type="text" placeholder="name" name="name"/>
+                <input type="password" placeholder="password" name="password"/>
+                <input type="text" placeholder="email address" name="email"/>
                 <button>create</button>
                 <p class="message">Already registered? <a href="#">Sign In</a></p>
             </form>
-            <form class="login-form" id="login-form">
-                <input type="text" placeholder="username"/>
-                <input type="password" placeholder="password"/>
+            <form class="login-form" id="login-form" action="/login" method="POST">
+                <input type="text" placeholder="email" name="email"/>
+                <input type="password" placeholder="password" name="password"/>
                 <button>login</button>
                 <p class="message">Not registered? <a href="#">Create an account</a></p>
             </form>
+            <div class="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <?php $vs->print($_error_bad_credentials) ?>
+            </div>
         </div>
     </div>
 <?php $vs->template->endblock() ?>

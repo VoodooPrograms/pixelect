@@ -2,24 +2,72 @@
 
 namespace Quetzal\User\Models\User;
 
+use Quetzal\Core\Database\Models\Model;
 use Quetzal\Core\Database\Models\Repository;
 
 class UserRepository extends Repository
 {
+    private $selectStmt;
+    private $updateStmt;
+    private $insertStmt;
 
-    public function getUser(string $email): ?User {
-        $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.users WHERE email = :email
+    public function __construct()
+    {
+        parent::__construct();
+        $this->selectStmt = $this->database->connect()->prepare('
+            SELECT * FROM users WHERE id=?
         ');
-        $stmt->bindParam(':email', $email, \PDO::PARAM_STR);
-        $stmt->execute();
+        $this->updateStmt = $this->database->connect()->prepare('
+            UPDATE users SET id = :id, name = :name, email = :email, password = :password WHERE id = :id
+        ');
+        $this->insertStmt = $this->database->connect()->prepare('
+            INSERT INTO users ( name, email, password ) VALUES( :name, :email, :password )
+        ');
+    }
 
-        $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+    public function findByEmail(string $email): ?User {
+        $this->selectStmt = $this->database->connect()->prepare('
+            SELECT * FROM users WHERE email=:email
+        ');
+        $this->selectStmt->bindValue(':email', $email);
+        $this->selectStmt->execute();
+        if (!$this->selectStmt->rowCount()) {
+            return null;
+        }
+        return new User($this->selectStmt->fetch());
+    }
 
-        if ($user == false) return null;
+    public function update(array $data, int $id)
+    {
+        $this->updateStmt->execute([
+            $id,
+            $data['name'],
+            $data['email'],
+            $data['password'],
+        ]);
+    }
 
-        return new User(
+    protected function doCreateObject(array $data): Model
+    {
+        return new User($data);
+    }
 
-        );
+    protected function doInsert(Model $model)
+    {
+        $this->insertStmt->execute([
+            $model->getName(),
+            $model->getEmail(),
+            $model->getPassword()
+        ]);
+    }
+
+    protected function selectStmt(): \PDOStatement
+    {
+        return $this->selectStmt;
+    }
+
+    protected function targetClass(): string
+    {
+        return User::class;
     }
 }

@@ -7,22 +7,32 @@ use Quetzal\User\Models\Picture\Picture;
 
 class User extends Model
 {
-    private string $name;
-    private string $email;
-    private string $password;
+    protected int $id;
+    protected string $name;
+    protected string $email;
+    protected string $password;
 
     private $pictures;
 
-    /**
-     * User constructor.
-     * @param int $id
-     * @param string $name
-     */
-    public function __construct(int $id, string $name)
+    public static function tableName(): string
     {
-        $this->setName($name);
-        $this->pictures = self::collection(Picture::class);
-        parent::__construct($id);
+        return 'users';
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     /**

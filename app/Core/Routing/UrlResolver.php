@@ -129,6 +129,11 @@ class UrlResolver extends Resolver
     {
         foreach ($routing as $route){
             if ($route["path"] == $path && $_SERVER['REQUEST_METHOD'] == $route['method']){
+                if (isset($route['guard'])) {
+                    if ($this->isGuarded($route['guard'])) {
+                        $this->guardRedirect();
+                    }
+                }
                 $class = $route["class"];
                 $action = $route['action'];
                 $method = $route['method'];
@@ -138,4 +143,13 @@ class UrlResolver extends Resolver
         return null;
     }
 
+    private function isGuarded(string $route) {
+        $guard = $this->reg->getGuard();
+        return $guard->isRouteGuarded($route);
+    }
+
+    public function guardRedirect() {
+        $guard = $this->reg->getGuard();
+        $guard->onAuthFailure();
+    }
 }

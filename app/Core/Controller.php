@@ -33,6 +33,19 @@ abstract class Controller
         $request->setStatus($status);
     }
 
+    public function isGet() {
+        return $_SERVER['REQUEST_METHOD'] == 'GET';
+    }
+
+    public function isPost() {
+        return $_SERVER['REQUEST_METHOD'] == 'POST';
+    }
+
+    public function redirect($url) {
+        $location = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/' . $url;
+        header("Location: " . $location);
+    }
+
     // Rendering template
     protected function render(string $template=null, array $parr=[])
     {

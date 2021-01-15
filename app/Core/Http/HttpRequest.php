@@ -1,7 +1,11 @@
 <?php
 
-
 namespace Quetzal\Core\Http;
+
+use Quetzal\Core\AppException;
+use Quetzal\Core\Http\Bags\GetBag;
+use Quetzal\Core\Http\Bags\PostBag;
+use Quetzal\Core\Http\Bags\SessionBag;
 
 class HttpRequest extends Request
 {
@@ -13,7 +17,9 @@ class HttpRequest extends Request
     protected $content_type = "";
     protected $content_length = 0;
     protected $cookies = [];
-    protected $properties = [];
+    protected $session;
+    protected $get;
+    protected $post;
 
     protected function launch()
     {
@@ -24,19 +30,9 @@ class HttpRequest extends Request
         $this->setContentType($_SERVER["CONTENT_TYPE"]);
         $this->setContentLength((int)$_SERVER["CONTENT_LENGTH"]);
         $this->setCookies($_COOKIE);
-
-//        printf("<br>" .
-//        "<div style=\"margin:16px;padding:16px;background-color:#FFFFC0\">" .
-//        "<code><span style=\"font-size:150%%\">" .
-//        "<b>(DEBUG) HttpRequest constructor called:</b></span>" . PHP_EOL);
-//        printf("<br><i>[path]</i> "); var_dump($this->getPath());
-//        printf("<br><i>[status]</i> "); var_dump($this->getStatus());
-//        printf("<br><i>[request_method]</i> "); var_dump($this->getRequestMethod());
-//        printf("<br><i>[ip_address]</i> "); var_dump($this->getIpAddress());
-//        printf("<br><i>[user_agent]</i> "); var_dump($this->getUserAgent());
-//        printf("<br><i>[content_type]</i> "); var_dump($this->getContentType());
-//        printf("<br><i>[content_length]</i> "); var_dump($this->getContentLength());
-//        printf("<br></code></div><br>" . PHP_EOL);
+        $this->setSession($_SESSION ?? []);
+        $this->setGet($_GET);
+        $this->setPost($_POST);
     }
 
     public function getPath(): string
@@ -46,7 +42,7 @@ class HttpRequest extends Request
 
     public function setPath(?string $path): void
     {
-        $this->path = $path = $path;
+        $this->path = $path;
     }
 
     public function getStatus(): int
@@ -123,14 +119,35 @@ class HttpRequest extends Request
         $this->cookies = $cookies;
     }
 
-    public function getProperty(string $key): string
+    public function getSession(): SessionBag
     {
-        return $this->properties[$key];
+        return $this->session;
     }
 
-    public function setProperty(string $key, $val): void
+    public function setSession($session): void
     {
-        $this->properties[$key] = $val;
+        $this->session = new SessionBag($session);
     }
+
+    public function setGet(array $get_data)
+    {
+        $this->get = new GetBag($get_data);
+    }
+
+    public function setPost(array $post_data)
+    {
+        $this->post = new PostBag($post_data);
+    }
+
+    public function get(): GetBag
+    {
+        return $this->get;
+    }
+
+    public function post(): PostBag
+    {
+        return $this->post;
+    }
+
 
 }
