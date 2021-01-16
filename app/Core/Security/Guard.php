@@ -2,6 +2,7 @@
 
 namespace Quetzal\Core\Security;
 
+use Quetzal\Core\AppException;
 use Quetzal\Core\Register;
 
 class Guard
@@ -21,13 +22,25 @@ class Guard
         return false;
     }
 
+    public function isAuth(): bool {
+        return isset($_SESSION[self::USER_KEY]);
+    }
+
     public function onAuthFailure() {
         $location = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/' . $this->base_redirect;
         header("Location: " . $location);
     }
 
     public function auth(int $user_id) {
-        $this->reg->getRequest()->getSession()->set(self::USER_KEY, $user_id);
+        try {
+            $this->reg->getRequest()->getSession()->set(self::USER_KEY, $user_id);
+        } catch (AppException $e) {
+
+        }
+    }
+
+    public function logout() {
+        $this->reg->getRequest()->getSession()->unset(self::USER_KEY);
     }
 
     public function getBaseRedirect(): string

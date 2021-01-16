@@ -1,6 +1,6 @@
 <?php
 
-namespace Quetzal\Core\Rule;
+namespace Quetzal\Core\Rules;
 
 use Quetzal\Core\Register;
 
@@ -16,11 +16,13 @@ abstract class Rule
     public array $errors = [];
 
     abstract public function rules();
-    abstract public function messages();
 
-    public static function validation() {
-        $rule = new static();
-        return $rule->validate();
+    public static function make() {
+        return new static();
+    }
+
+    public function validation(array $data) {
+        return $this->validate($data);
     }
 
     public function getLabel($attribute)
@@ -28,41 +30,44 @@ abstract class Rule
         return $this->messages()[$attribute] ?? $attribute;
     }
 
-    public function validate()
+    public function validate(array $data)
     {
-        foreach ($this->rules() as $attribute => $rules) {
-            $value = $this->{$attribute};
-            foreach ($rules as $rule) {
-                $ruleName = $rule;
-                if (!is_string($rule)) {
-                    $ruleName = $rule[0];
-                }
-                if ($ruleName === self::RULE_REQUIRED && !$value) {
-                    $this->addErrorByRule($attribute, self::RULE_REQUIRED);
-                }
-                if ($ruleName === self::RULE_EMAIL && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                    $this->addErrorByRule($attribute, self::RULE_EMAIL);
-                }
-                if ($ruleName === self::RULE_MIN && strlen($value) < $rule['min']) {
-                    $this->addErrorByRule($attribute, self::RULE_MIN, ['min' => $rule['min']]);
-                }
-                if ($ruleName === self::RULE_MAX && strlen($value) > $rule['max']) {
-                    $this->addErrorByRule($attribute, self::RULE_MAX);
-                }
-                if ($ruleName === self::RULE_MATCH && $value !== $this->{$rule['match']}) {
-                    $this->addErrorByRule($attribute, self::RULE_MATCH, ['match' => $rule['match']]);
-                }
-                if ($ruleName === self::RULE_UNIQUE) {
-                    $className = $rule['class'];
-                    $uniqueAttr = $rule['attribute'] ?? $attribute;
-                    $tableName = $className::tableName();
-                    $db = Register::instance()->getDatabase()->connect();
-                    $statement = $db->prepare("SELECT * FROM $tableName WHERE $uniqueAttr = :$uniqueAttr");
-                    $statement->bindValue(":$uniqueAttr", $value);
-                    $statement->execute();
-                    $record = $statement->fetchObject();
-                    if ($record) {
-                        $this->addErrorByRule($attribute, self::RULE_UNIQUE);
+//        var_dump($data);
+        foreach ($data as $attribute => $value) {
+//            var_dump($this->rules()[$attribute]);
+            if (isset($this->rules()[$attribute])) {
+                foreach ($this->rules()[$attribute] as $rule) {
+                    $ruleName = $rule;
+                    if (!is_string($rule)) {
+                        $ruleName = $rule[0];
+                    }
+                    if ($ruleName === self::RULE_REQUIRED && !$value) {
+                        $this->addErrorByRule($attribute, self::RULE_REQUIRED);
+                    }
+                    if ($ruleName === self::RULE_EMAIL && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                        $this->addErrorByRule($attribute, self::RULE_EMAIL);
+                    }
+                    if (($ruleName === self::RULE_MIN && strlen($value) < $rule['min'])) {
+                        $this->addErrorByRule($attribute, self::RULE_MIN, ['min' => $rule['min']]);
+                    }
+                    if ($ruleName === self::RULE_MAX && strlen($value) > $rule['max']) {
+                        $this->addErrorByRule($attribute, self::RULE_MAX);
+                    }
+                    if ($ruleName === self::RULE_MATCH && $value !== $this->{$rule['match']}) {
+                        $this->addErrorByRule($attribute, self::RULE_MATCH, ['match' => $rule['match']]);
+                    }
+                    if ($ruleName === self::RULE_UNIQUE) {
+                        $className = $rule['class'];
+                        $uniqueAttr = $rule['attribute'] ?? $attribute;
+                        $tableName = $className::tableName();
+                        $db = Register::instance()->getDatabase()->connect();
+                        $statement = $db->prepare("SELECT * FROM $tableName WHERE $uniqueAttr = :$uniqueAttr");
+                        $statement->bindValue(":$uniqueAttr", $value);
+                        $statement->execute();
+                        $record = $statement->fetchObject();
+                        if ($record) {
+                            $this->addErrorByRule($attribute, self::RULE_UNIQUE);
+                        }
                     }
                 }
             }
@@ -73,7 +78,7 @@ abstract class Rule
     public function errorMessages()
     {
         return [
-            self::RULE_REQUIRED => 'This field is required',
+            self::RULE_REQUIRED => 'This {field} is required',
             self::RULE_EMAIL => 'This field must be valid email address',
             self::RULE_MIN => 'Min length of this field must be {min}',
             self::RULE_MAX => 'Max length of this field must be {max}',
@@ -94,22 +99,21 @@ abstract class Rule
         foreach ($params as $key => $value) {
             $errorMessage = str_replace("{{$key}}", $value, $errorMessage);
         }
-        $this->errors[$attribute][] = $errorMessage;
+        $this->errors['_error_' . $attribute][] = $errorMessage;
     }
 
     public function addError(string $attribute, string $message)
     {
-        $this->errors[$attribute][] = $message;
+        $this->errors['_error_' . $attribute][] = $message;
     }
 
     public function hasError($attribute)
     {
-        return $this->errors[$attribute] ?? false;
+        return $this->errors['_error_' . $attribute] ?? false;
     }
 
-    public function getFirstError($attribute)
+    public function getFirstError()
     {
-        $errors = $this->errors[$attribute] ?? [];
-        return $errors[0] ?? '';
+        return $errors[0] ?? [];
     }
 }

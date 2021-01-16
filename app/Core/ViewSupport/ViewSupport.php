@@ -119,11 +119,11 @@ class ViewSupport
                 } else
                     echo "Error: not printable";
         } else if ($this->isPrintable($var)) {
-            echo $var;
+            echo $var.'<br/>';
         }
     }
 
     public function session(string $key) {
-        return $this->registry->getRequest()->getSession()->get($key);
+        $this->print($this->registry->getRequest()->getSession()->getFlash($key));
     }
 }

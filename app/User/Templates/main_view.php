@@ -9,7 +9,7 @@
 <div class="row">
     <nav class="col-2">
         <div class="button-list">
-            <a href="#">Draw</a>
+            <a href="/pixel-editor">Draw</a>
             <a href="#">Gallery</a>
             <a href="#">Challenges</a>
         </div>

@@ -150,6 +150,6 @@ class UrlResolver extends Resolver
 
     public function guardRedirect() {
         $guard = $this->reg->getGuard();
-        $guard->onAuthFailure();
+        if (!$guard->isAuth()) $guard->onAuthFailure();
     }
 }

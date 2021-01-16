@@ -6,10 +6,9 @@ class SessionBag extends Bag
 {
     protected const FLASH_KEY = '__flashes';
 
-    public function __construct(array $data) {
-        $this->bag = $data;
-
+    public function __construct() {
         session_start();
+        $this->bag = $_SESSION;
         $flashMessages = $_SESSION[self::FLASH_KEY] ?? [];
         foreach ($flashMessages as $key => &$flashMessage) {
             $flashMessage['remove'] = true;
@@ -33,6 +32,10 @@ class SessionBag extends Bag
     public function getFlash($key)
     {
         return $_SESSION[self::FLASH_KEY][$key]['value'] ?? false;
+    }
+
+    public function unset(string $key) {
+        unset($_SESSION[$key]);
     }
 
     public function __destruct()

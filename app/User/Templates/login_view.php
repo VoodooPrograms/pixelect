@@ -44,8 +44,10 @@
                 <p class="message">Not registered? <a href="#">Create an account</a></p>
             </form>
             <div class="alert">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                 <?php $vs->print($_error_bad_credentials) ?>
+                <?php $vs->session('_error_bad_registry') ?>
+
+                <?php $vs->session('_message_logout') ?>
             </div>
         </div>
     </div>

@@ -4,10 +4,10 @@ namespace Quetzal\User\Controllers;
 
 use Quetzal\Core\Controller;
 use Quetzal\Core\Database\Models\Repository;
-use Quetzal\Core\Http\HttpRequest;
 use Quetzal\Core\Http\Request;
 use Quetzal\User\Models\User\User;
 use Quetzal\User\Models\User\UserRepository;
+use Quetzal\User\Rules\UserRule;
 
 class AuthController extends Controller
 {
@@ -19,14 +19,6 @@ class AuthController extends Controller
     }
 
     public function loginView() {
-//        $user = new User(
-//            ['name' => 'bartosz', 'email' => 'asd512@gmail.com', 'password' => 'test12346']
-//        );
-//        $user->save();
-//        $this->userRepository->insert(new User(['name' => 'bartosz', 'email' => 'asd51@gmail.com', 'password' => 'test12346']));
-//        dump($this->userRepository->find(5));
-//        $this->userRepository->update(['name' => 'bartosz2', 'email' => 'asd5@gmail.com', 'password' => 'test12346'], 1);
-
         return $this->render('login_view.php');
     }
 
@@ -46,15 +38,27 @@ class AuthController extends Controller
     }
 
     public function registerUser(Request $request) {
-//        var_dump($request);
-
-        // validate $data
         $data = $request->post()->toArray();
-        $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+        $rule = UserRule::make();
+        $valid = $rule->validation($data);
 
-        $user = new User($data);
-        $user->save();
+        if ($valid) {
+            $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
 
+            $user = new User($data);
+            $user->save();
+
+            $this->redirect('login');
+        }
+
+        $this->registry->getRequest()->getSession()->setFlash('_error_bad_registry', $rule->errors);
+        $this->redirect('login');
+    }
+
+    public function logoutUser() {
+        $this->registry->getGuard()->logout();
+
+        $this->registry->getRequest()->getSession()->setFlash('_message_logout', 'You have logged out. Goodbye!');
         $this->redirect('login');
     }
 }
