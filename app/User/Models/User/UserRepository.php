@@ -7,6 +7,7 @@ use Quetzal\Core\Database\Models\Repository;
 
 class UserRepository extends Repository
 {
+    private $conn;
     private $selectStmt;
     private $updateStmt;
     private $insertStmt;
@@ -14,32 +15,30 @@ class UserRepository extends Repository
     public function __construct()
     {
         parent::__construct();
+        $this->conn = $this->database->connect();
         $this->selectStmt = $this->database->connect()->prepare('
             SELECT * FROM users WHERE id=?
-        ');
-        $this->updateStmt = $this->database->connect()->prepare('
-            UPDATE users SET id = :id, name = :name, email = :email, password = :password WHERE id = :id
-        ');
-        $this->insertStmt = $this->database->connect()->prepare('
-            INSERT INTO users ( name, email, password ) VALUES( :name, :email, :password )
         ');
     }
 
     public function findByEmail(string $email): ?User {
-        $this->selectStmt = $this->database->connect()->prepare('
+        $stmt = $this->conn->prepare('
             SELECT * FROM users WHERE email=:email
         ');
-        $this->selectStmt->bindValue(':email', $email);
-        $this->selectStmt->execute();
-        if (!$this->selectStmt->rowCount()) {
+        $stmt->bindValue(':email', $email);
+        $stmt->execute();
+        if (!$stmt->rowCount()) {
             return null;
         }
-        return new User($this->selectStmt->fetch());
+        return new User($stmt->fetch());
     }
 
     public function update(array $data, int $id)
     {
-        $this->updateStmt->execute([
+        $updateStmt = $this->conn->prepare('
+            UPDATE users SET id = :id, name = :name, email = :email, password = :password WHERE id = :id
+        ');
+        $updateStmt->execute([
             $id,
             $data['name'],
             $data['email'],
@@ -54,7 +53,10 @@ class UserRepository extends Repository
 
     protected function doInsert(Model $model)
     {
-        $this->insertStmt->execute([
+        $insertStmt = $this->conn->prepare('
+            INSERT INTO users ( name, email, password ) VALUES( :name, :email, :password )
+        ');
+        $insertStmt->execute([
             $model->getName(),
             $model->getEmail(),
             $model->getPassword()
@@ -63,7 +65,9 @@ class UserRepository extends Repository
 
     protected function selectStmt(): \PDOStatement
     {
-        return $this->selectStmt;
+        return $this->conn->prepare('
+            SELECT * FROM users WHERE id=?
+        ');
     }
 
     protected function targetClass(): string

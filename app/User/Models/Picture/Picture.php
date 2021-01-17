@@ -8,8 +8,13 @@ class Picture extends Model
 {
     protected int $id;
     protected string $uuid;
-    protected $owner; // User
+    protected int $user_id;
     protected array $data; // json with picture data
+
+    public static function tableName(): string
+    {
+        return 'pictures';
+    }
 
     /**
      * @return int

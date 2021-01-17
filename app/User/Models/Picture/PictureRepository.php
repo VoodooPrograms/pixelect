@@ -8,7 +8,7 @@ use Quetzal\Core\Database\Models\Repository;
 class PictureRepository extends Repository
 {
 
-    public function update(Model $model)
+    public function update(array $data, int $id)
     {
         // TODO: Implement update() method.
     }

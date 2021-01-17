@@ -245,24 +245,72 @@ class SaveButton {
 }
 
 class LoadButton {
-    constructor(_, {dispatch}) {
+    constructor(state, {dispatch}) {
+        this.picture = state.picture;
         this.dom = elt("div", {
             classList: 'tool-button icon load-icon',
-            onclick: () => startLoad(dispatch)
+            onclick: () => this.startLoad({dispatch})
         });
     }
-    syncState() {}
+    startLoad({dispatch}) {
+        let form = new FormData();
+        form.append("picture", JSON.stringify(this.picture))
+        fetch('http://localhost:8080/pixel-editor/save', {
+            method: 'POST',
+            body: form,
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                dispatch({
+                    picture: new Picture(data.message.width, data.message.height, data.message.pixels)
+                });
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+    syncState(state) { this.picture = state.picture; }
 }
 
-function startLoad(dispatch) {
-    let input = elt("input", {
-        type: "file",
-        onchange: () => finishLoad(input.files[0], dispatch)
-    });
-    document.body.appendChild(input);
-    input.click();
-    input.remove();
-}
+// function startLoad() {
+//     const data = { username: 'example' };
+//     let canvas = elt("canvas");
+//     drawPicture(state.picture, canvas, scale);
+//     let link = elt("a", {
+//         href: canvas.toDataURL(),
+//         download: this.generateFileName()
+//     });
+//     document.body.appendChild(link);
+//     link.click();
+//     link.remove();
+//
+//
+//     fetch('http://localhost:8080/pixel-editor/save', {
+//         method: 'POST', // or 'PUT'
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(data),
+//     })
+//         .then(response => response.json())
+//         .then(data => {
+//             console.log('Success:', data);
+//         })
+//         .catch((error) => {
+//             console.error('Error:', error);
+//         });
+// }
+
+// function startLoad(dispatch) {
+//     let input = elt("input", {
+//         type: "file",
+//         onchange: () => finishLoad(input.files[0], dispatch)
+//     });
+//     document.body.appendChild(input);
+//     input.click();
+//     input.remove();
+// }
 
 function finishLoad(file, dispatch) {
     if (file == null) return;

@@ -21,6 +21,7 @@ abstract class Repository
     abstract protected function selectStmt(): \PDOStatement;
     abstract protected function targetClass(): string;
 
+
     public function find(int $id): ?Model {
         $this->selectStmt()->execute([$id]);
         $row = $this->selectStmt()->fetch();

@@ -77,3 +77,9 @@ routing:
         action: index
         method: GET
         guard: auth
+    pixel-editor-save:
+        path: /pixel-editor/save
+        class: Quetzal\User\Controllers\PixelEditorController
+        action: save
+        method: POST
+#        guard: auth
