@@ -15,6 +15,10 @@ class Guard
         $this->reg = Register::instance();
     }
 
+    public static function id(): int {
+        return $_SESSION[self::USER_KEY];
+    }
+
     public function isRouteGuarded($route) {
         if ($route == 'auth') {
             return true;

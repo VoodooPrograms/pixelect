@@ -7,6 +7,26 @@ use Quetzal\Core\Database\Models\Repository;
 
 class PictureRepository extends Repository
 {
+    private $conn;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->conn = $this->database->connect();
+    }
+
+    public function findAll() {
+        $stmt = $this->conn->prepare('
+            SELECT pictures.*,
+                (SELECT count(*) FROM likes WHERE likes.picture_id = pictures.id) as likes
+            FROM pictures
+                LEFT JOIN likes ON pictures.id = likes.picture_id
+                GROUP BY pictures.id;
+        ');
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, Picture::class);
+    }
 
     public function update(array $data, int $id)
     {
@@ -25,11 +45,13 @@ class PictureRepository extends Repository
 
     protected function selectStmt(): \PDOStatement
     {
-        // TODO: Implement selectStmt() method.
+        return $this->conn->prepare('
+            SELECT * FROM pictures LIMIT 2;
+        ');
     }
 
     protected function targetClass(): string
     {
-        // TODO: Implement targetClass() method.
+        return Picture::class;
     }
 }

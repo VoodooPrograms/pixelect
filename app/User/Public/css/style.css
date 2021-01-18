@@ -85,31 +85,6 @@ body {
 }
 
 
-/*.col-1 {width: 8.33%;}*/
-/*.col-2 {width: 16.66%;}*/
-/*.col-3 {width: 25%;}*/
-/*.col-4 {width: 33.33%;}*/
-/*.col-5 {width: 41.66%;}*/
-/*.col-6 {width: 50%;}*/
-/*.col-7 {width: 58.33%;}*/
-/*.col-8 {width: 66.66%;}*/
-/*.col-9 {width: 75%;}*/
-/*.col-10 {width: 83.33%;}*/
-/*.col-11 {width: 91.66%;}*/
-/*.col-12 {width: 100%;}*/
-
-/*[class*="col-"] {*/
-/*    float: left;*/
-/*    !*padding: 15px;*!*/
-/*}*/
-
-/*.row::after {*/
-/*    content: "";*/
-/*    clear: both;*/
-/*    display: table;*/
-/*}*/
-
-
 .grid-container {
     display: grid;
 }
@@ -125,7 +100,8 @@ body {
 nav {
     background-color: var(--text-color);
     height: 100vh;
-    position: relative;
+    position: fixed;
+    z-index: 10;
 }
 
 nav > .button-list {
@@ -158,6 +134,7 @@ nav > .button-list a:hover {
     position: fixed;
     top: 10px;
     left: 10px;
+    z-index: 1000;
     transition: 0.6s;
     visibility: hidden;
 }
@@ -223,17 +200,44 @@ main {
     margin: 0 auto;
 }
 
-.gallery-item {
+.gallery-column {
     width: 400px;
-    height: 1200px;
+    margin: 10px;
 }
 
-.gallery-item:nth-child(odd) {
-    background-color: red;
+.gallery-column img {
+    width: 400px;
+
 }
 
+.gallery-item {
+    position: relative;
+    margin: 10px 0;
+    width: 100%;
+}
 
+.gallery-item .picture-hearts-icon {
+    width: 40px;
+}
 
+.gallery-item .picture-hearts {
+    width: 40px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    text-align: center;
+    opacity: 0.6;
+    transition: 0.4s;
+    cursor: pointer;
+}
+
+.gallery-item .picture-hearts:hover {
+    opacity: 1.0;
+}
+
+.gallery-item .picture-hearts div {
+    font-size: 1.4em;
+}
 
 canvas {
     position: absolute;
@@ -315,6 +319,20 @@ canvas {
 
     #menu-button {
         visibility: visible;
+    }
+
+    .gallery {
+        width: 100vw;
+        flex-direction: column;
+    }
+
+    .gallery-column {
+        width: 90%;
+        margin: 10px 0;
+    }
+
+    .gallery-column img {
+        width: 100%;
     }
 
     canvas {

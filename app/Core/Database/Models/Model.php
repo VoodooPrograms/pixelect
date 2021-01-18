@@ -2,12 +2,13 @@
 
 namespace Quetzal\Core\Database\Models;
 
+use JsonSerializable;
 use Quetzal\Core\Database\Utils\Collection;
 use Quetzal\Core\Register;
 
-abstract class Model
+abstract class Model implements JsonSerializable
 {
-    public function __construct(array $properties) {
+    public function __construct(array $properties = []) {
         foreach ($properties as $property => $value) {
             if (property_exists(get_class($this), $property)) {
                 $this->$property = $value;
@@ -20,6 +21,10 @@ abstract class Model
 
     public function toArray() {
         return (array) $this;
+    }
+
+    public function jsonSerialize() {
+        return (object) get_object_vars($this);
     }
 
     public static function collection(string $type) : ?Collection {
@@ -49,7 +54,9 @@ abstract class Model
         $tableName = static::tableName();
         $attributes = array_keys($where);
         $sql = implode("AND", array_map(fn($attr) => "$attr = :$attr", $attributes));
-        $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
+
+        $reg = Register::instance();
+        $statement = $reg->getDatabase()->connect()->prepare("SELECT * FROM $tableName WHERE $sql");
         foreach ($where as $key => $item) {
             $statement->bindValue(":$key", $item);
         }

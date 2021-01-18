@@ -9,7 +9,7 @@ class Picture extends Model
     protected int $id;
     protected string $uuid;
     protected int $user_id;
-    protected array $data; // json with picture data
+    protected $data; // json with picture data
 
     public static function tableName(): string
     {
@@ -46,22 +46,6 @@ class Picture extends Model
     public function setUuid(string $uuid): void
     {
         $this->uuid = $uuid;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOwner()
-    {
-        return $this->owner;
-    }
-
-    /**
-     * @param mixed $owner
-     */
-    public function setOwner($owner): void
-    {
-        $this->owner = $owner;
     }
 
     /**

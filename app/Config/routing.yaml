@@ -71,6 +71,12 @@ routing:
         action: index
         method: GET
         guard: auth
+    main-page-pictures:
+        path: /pictures/all
+        class: Quetzal\User\Controllers\MainController
+        action: pictures
+        method: GET
+        guard: auth
     pixel-editor:
         path: /pixel-editor
         class: Quetzal\User\Controllers\PixelEditorController
@@ -82,4 +88,4 @@ routing:
         class: Quetzal\User\Controllers\PixelEditorController
         action: save
         method: POST
-#        guard: auth
+        guard: auth

@@ -29,9 +29,9 @@
     </div>
     <main class="col-10">
         <div class="gallery">
-            <div class="gallery-item">qwe</div>
-            <div class="gallery-item">asd</div>
-            <div class="gallery-item">ddd</div>
+            <div class="gallery-column"></div>
+            <div class="gallery-column"></div>
+            <div class="gallery-column"></div>
         </div>
     </main>
 </div>
@@ -45,6 +45,65 @@
         menu.classList.toggle('show');
         menuButton.classList.toggle('show');
     });
+</script>
+
+
+<script src=<?php $vs->assets('js/editor.js'); ?>></script>
+<script>
+    fetch('http://localhost:8080/pictures/all', {
+        method: 'GET'
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+
+            const columns = document.querySelectorAll('.gallery-column');
+            let columnIndex = 0;
+            data.pictures.forEach((picture) => {
+                let pictureImg = createPictureElement(picture);
+                let thumbImg = createThumbElement(picture.likes);
+                let item = document.createElement('div');
+                item.classList.add('gallery-item');
+
+                item.appendChild(pictureImg);
+                item.appendChild(thumbImg);
+                columns[columnIndex].appendChild(item);
+                columnIndex++;
+                if (columnIndex >= columns.length) columnIndex = 0;
+            })
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
+    function createPictureElement(pictureData) {
+        let canvas = elt("canvas");
+        let picture = Object.assign(new Picture(), JSON.parse(pictureData.data))
+        drawPicture(picture, canvas, scale);
+
+        let img = document.createElement('img');
+        img.src = canvas.toDataURL();
+
+        return img;
+    }
+
+    function createThumbElement(thumbs) {
+        let thumbContainer = document.createElement('div');
+        let heartImg = document.createElement('img')
+        let thumb = document.createElement('div')
+
+        heartImg.src = 'app/User/Public/assets/icons/heart.svg'
+        thumb.innerHTML = thumbs;
+
+        heartImg.classList.add('picture-hearts-icon');
+        thumbContainer.classList.add('picture-hearts');
+
+        thumbContainer.appendChild(heartImg);
+        thumbContainer.appendChild(thumb);
+
+        return thumbContainer;
+    }
+
 </script>
 <?php $vs->template->endblock();?>
 

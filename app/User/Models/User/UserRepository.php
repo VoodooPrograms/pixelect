@@ -8,17 +8,11 @@ use Quetzal\Core\Database\Models\Repository;
 class UserRepository extends Repository
 {
     private $conn;
-    private $selectStmt;
-    private $updateStmt;
-    private $insertStmt;
 
     public function __construct()
     {
         parent::__construct();
         $this->conn = $this->database->connect();
-        $this->selectStmt = $this->database->connect()->prepare('
-            SELECT * FROM users WHERE id=?
-        ');
     }
 
     public function findByEmail(string $email): ?User {
