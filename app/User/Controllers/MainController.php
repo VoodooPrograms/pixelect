@@ -4,7 +4,6 @@ namespace Quetzal\User\Controllers;
 
 use Quetzal\Core\Controller;
 use Quetzal\Core\Database\Models\Repository;
-use Quetzal\User\Models\Picture\Picture;
 use Quetzal\User\Models\Picture\PictureRepository;
 
 class MainController extends Controller

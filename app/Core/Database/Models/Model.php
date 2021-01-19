@@ -53,7 +53,7 @@ abstract class Model implements JsonSerializable
     {
         $tableName = static::tableName();
         $attributes = array_keys($where);
-        $sql = implode("AND", array_map(fn($attr) => "$attr = :$attr", $attributes));
+        $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
 
         $reg = Register::instance();
         $statement = $reg->getDatabase()->connect()->prepare("SELECT * FROM $tableName WHERE $sql");

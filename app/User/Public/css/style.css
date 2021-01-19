@@ -212,7 +212,7 @@ main {
 
 .gallery-item {
     position: relative;
-    margin: 10px 0;
+    margin: 20px 0 0 0;
     width: 100%;
 }
 
@@ -235,7 +235,7 @@ main {
     opacity: 1.0;
 }
 
-.gallery-item .picture-hearts div {
+.gallery-item .picture-hearts span {
     font-size: 1.4em;
 }
 

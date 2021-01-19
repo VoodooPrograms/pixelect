@@ -77,6 +77,12 @@ routing:
         action: pictures
         method: GET
         guard: auth
+    main-page-like-add:
+        path: /likes/add
+        class: Quetzal\User\Controllers\LikesController
+        action: store
+        method: POST
+        guard: auth
     pixel-editor:
         path: /pixel-editor
         class: Quetzal\User\Controllers\PixelEditorController
