@@ -8,12 +8,15 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "*",
+        "symfony/var-dumper": "^5.2"
     },
     "require": {
         "php": ">=7.3",
         "quetzal/dependency-injection": "^0.1.0",
         "symfony/yaml": "^5.2",
-        "quetzal/settings-manager": "^0.1.2"
+        "quetzal/settings-manager": "^0.1.2",
+        "ext-pdo": "*",
+        "ext-json": "*"
     }
 }
