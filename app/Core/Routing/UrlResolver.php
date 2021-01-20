@@ -64,9 +64,7 @@ class UrlResolver extends Resolver
             } else if ($this->isNotNumber($request_part) && $regex == "String") {
                 return true;
             } else {
-                //todo 1. Think what framework should do when someone misspell Regex eg. like Strnig number
-                //todo 2. Allow people to use regular php regular expr. like this {<phpregex>/^[A-Za-z0-9_- ]+$/}
-                //throw new AppException("Resolver can't resolve this regex: ".$URL_parts_yaml[$i]);
+                throw new AppException("Resolver can't resolve this regex: ".$routing_part);
             }
         }
         return false;

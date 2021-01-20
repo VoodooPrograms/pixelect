@@ -115,7 +115,7 @@ class ViewSupport
                 if ($this->isPrintable($v)) {
                     $this->print($v);
                     if (next($var))
-                        echo ", ";
+                        echo " ";
                 } else
                     echo "Error: not printable";
         } else if ($this->isPrintable($var)) {

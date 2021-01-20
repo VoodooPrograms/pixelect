@@ -18,7 +18,7 @@ class MainController extends Controller
 
 
     public function index() {
-//        var_dump(Picture::findOne(['id' => 2]));
+//        var_dump(Picture::find(['id' => 2]));
         return $this->render('main_view.php');
     }
 

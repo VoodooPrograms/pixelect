@@ -7,7 +7,12 @@ class SessionBag extends Bag
     protected const FLASH_KEY = '__flashes';
 
     public function __construct() {
-        session_start();
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+        if (session_status() === PHP_SESSION_ACTIVE){
+            session_regenerate_id();
+        }
         $this->bag = $_SESSION;
         $flashMessages = $_SESSION[self::FLASH_KEY] ?? [];
         foreach ($flashMessages as $key => &$flashMessage) {

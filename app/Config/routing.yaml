@@ -1,43 +1,4 @@
-#
-# EXAMPLES
-#
-#routing:
-#    homepage:
-#        path: /
-#        class: Quetzal\User\Controllers\SimpleController
-#        action: index
-#        method: GET
-#    blog:
-#        path: /blog/art
-#        class: Quetzal\User\Controllers\BlogController
-#        action: index
-#        method: GET
-#    blog_article:
-#        path: /blog
-#        class: Quetzal\User\Controllers\BlogController
-#        action: index
-#        method: GET
-#    blog_page:
-#        path: /blog/{Number}
-#        class: Quetzal\User\Controllers\BlogController
-#        action: index
-#        method: GET
-#    blog_page_string:
-#        path: /blog/{String}
-#        class: Quetzal\User\Controllers\BlogController
-#        action: index
-#        method: GET
-#    blog_page_test1:
-#        path: /blog/blog/*/*
-#        class: Quetzal\User\Controllers\BlogController
-#        action: index
-#        method: GET
-#    admin:
-#        path: /admin
-#        class: Quetzal\User\Controllers\SimpleController
-#        action: index
-#        method: GET
-#
+
 
 routing:
     homepage:

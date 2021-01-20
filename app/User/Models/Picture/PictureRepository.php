@@ -44,30 +44,4 @@ class PictureRepository extends Repository
         return $stmt->fetchAll(\PDO::FETCH_CLASS, Picture::class);
     }
 
-    public function update(array $data, int $id)
-    {
-        // TODO: Implement update() method.
-    }
-
-    protected function doCreateObject(array $data): Model
-    {
-        // TODO: Implement doCreateObject() method.
-    }
-
-    protected function doInsert(Model $model)
-    {
-        // TODO: Implement doInsert() method.
-    }
-
-    protected function selectStmt(): \PDOStatement
-    {
-        return $this->conn->prepare('
-            SELECT * FROM pictures LIMIT 2;
-        ');
-    }
-
-    protected function targetClass(): string
-    {
-        return Picture::class;
-    }
 }

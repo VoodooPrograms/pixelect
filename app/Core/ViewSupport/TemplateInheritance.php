@@ -63,9 +63,9 @@ class TemplateInheritance
         if (!$this->base) {
             $this->base = array(
                 'trace' => $trace,
-                'filters' => null, // purely for compile
+                'filters' => null,
                 'children' => array(),
-                'start' => 0, // purely for compile
+                'start' => 0,
                 'end' => null
             );
             $this->level = ob_get_level();
@@ -105,7 +105,7 @@ class TemplateInheritance
         );
     }
 
-    public function insertBlock($block) { // at this point, $block is done being modified
+    public function insertBlock($block) {
         $block['end'] = $this->end = ob_get_length();
         $name = $block['name'];
         if ($this->stack || $this->inBase($block['trace'])) {

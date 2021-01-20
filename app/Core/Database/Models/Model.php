@@ -50,7 +50,7 @@ abstract class Model implements JsonSerializable
         return true;
     }
 
-    public static function findOne($where)
+    public static function find($where)
     {
         $tableName = static::tableName();
         $attributes = array_keys($where);
@@ -63,9 +63,5 @@ abstract class Model implements JsonSerializable
         }
         $statement->execute();
         return $statement->fetchObject(static::class);
-    }
-
-    public function markDirty() {
-
     }
 }

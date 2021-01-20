@@ -33,11 +33,4 @@ class AppController
         $controler = $this->reg->getResolver()->match($request, $routing);
         return $controler;
     }
-
-    /*
-     * This will be function responsible for getting proper view
-     */
-    public function getView(Request $request)
-    {
-    }
 }
