@@ -7,7 +7,7 @@ use Quetzal\Core\AppException;
 
 class HttpResponse extends Response
 {
-    protected $status = 0;
+    protected $status = 200;
     protected $headers = [];
     protected $body = "";
     
@@ -84,6 +84,7 @@ class HttpResponse extends Response
 
     public function send(): int
     {
+        http_response_code($this->status);
         echo $this->body;
         return 1;
     }

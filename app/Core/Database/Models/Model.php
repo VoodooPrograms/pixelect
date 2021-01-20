@@ -43,6 +43,7 @@ abstract class Model implements JsonSerializable
             VALUES (" . implode(",", $params) . ")");
 
         foreach ($attributes as $param => $attribute) {
+            if ($attribute instanceof \DateTime) $attribute = $attribute->format('Y-m-d H:i:s');
             $statement->bindValue(":$param", $attribute);
         }
         $statement->execute();

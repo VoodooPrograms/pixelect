@@ -2,7 +2,7 @@
 
 
 <?php $vs->template->startblock('title') ?>
-    Pixelect - main page
+Pixelect - main page
 <?php $vs->template->endblock() ?>
 
 <?php $vs->template->startblock('content') ?>
@@ -28,16 +28,33 @@
         <img src="app/User/Public/assets/icons/hamburger.svg" />
     </div>
     <main class="col-10">
-        <div class="gallery">
-            <div class="gallery-column"></div>
-            <div class="gallery-column"></div>
-            <div class="gallery-column"></div>
+        <div class="contests">
+            <form method="POST" action="/contests">
+                <input type="text" placeholder="Contest title" name="title"/>
+                <input type="text" placeholder="Contest details" name="details"/>
+                <input type="datetime-local" name="starting_date">
+                <input type="datetime-local" name="ending_date">
+
+                <?php echo $vs->session('_error_bad_contest_data') ?>
+                <input type="submit" value="Add Contest">
+            </form>
+        <?php foreach ($contests as $contest) : ?>
+            <div class="contest-box">
+                <h3><?php echo $contest->getTitle(); ?></h3>
+                <p><?php echo $contest->getDetails(); ?></p>
+                <p>Starting date: <?php echo $contest->getStartingDate(); ?></p>
+                <p>Ending date: <?php echo $contest->getEndingDate(); ?></p>
+                <p>All likes: <?php echo $contest->getLikes(); ?></p>
+                <p>All pictures: <?php echo $contest->getPictures(); ?></p>
+            </div>
+        <?php endforeach; ?>
         </div>
     </main>
 </div>
 <?php $vs->template->endblock() ?>
 
 <?php $vs->template->startblock('scripts');?>
+
 <script>
     const menuButton = document.getElementById('menu-button');
     const menu = document.querySelector('nav');
@@ -46,9 +63,6 @@
         menuButton.classList.toggle('show');
     });
 </script>
-
-<script src=<?php $vs->assets('js/editor/editor.js'); ?>></script>
-<script src=<?php $vs->assets('js/pictures.js'); ?>></script>
 
 <?php $vs->template->endblock();?>
 

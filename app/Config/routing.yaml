@@ -83,6 +83,24 @@ routing:
         action: store
         method: POST
         guard: auth
+    contests:
+        path: /contests
+        class: Quetzal\User\Controllers\ContestController
+        action: index
+        method: GET
+        guard: auth
+    contests-show:
+        path: /contests/{Number}
+        class: Quetzal\User\Controllers\ContestController
+        action: show
+        method: GET
+        guard: auth
+    contests-add:
+        path: /contests
+        class: Quetzal\User\Controllers\ContestController
+        action: store
+        method: POST
+        guard: auth
     pixel-editor:
         path: /pixel-editor
         class: Quetzal\User\Controllers\PixelEditorController
