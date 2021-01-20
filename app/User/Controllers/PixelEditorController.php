@@ -25,16 +25,10 @@ class PixelEditorController extends Controller
 
     public function save(Request $request) {
         $data = json_decode($request->post()->get('picture'), true);
-        $data['pixels'][3] = "#222888";
 
         $picture = new Picture(['uuid' => uniqid(), 'user_id' => Guard::id(), 'data' => json_encode($data)]);
         $picture->save();
 
-        header('Content-type: application/json');
-        echo json_encode( ['message' => $data] );
-        return 1;
-
-//        return 1;
-//        return HttpResponse::createResponse('Hej JS', ['application/json'])->send();
+        return new HttpResponse(['message' => $data]);
     }
 }

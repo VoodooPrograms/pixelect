@@ -3,39 +3,83 @@
 
 namespace Quetzal\Core\Http;
 
+use Quetzal\Core\AppException;
+
 class HttpResponse extends Response
 {
     protected $status = 0;
     protected $headers = [];
     protected $body = "";
+    
+    const HTTP_CODES = [
+        200 => "OK",
+        301 => "Moved Permanently",
+        400 => "Bad Request",
+        401 => "Unauthorized",
+        403 => "Forbidden",
+        404 => "Not Found",
+        405 => "Method Not Allowed",
+        408 => "Request Timeout",
+        500 => "Internal Server Error",
+        502 => "Bad Gateway",
+        504 => "Gateway Timeout",
+    ];
 
-    public function __construct()
+    public function __construct($data, $code = 200, $encode = true, $charset = 'utf-8', $options = 0)
     {
-        $this->setDefaultHeaders();
+        $jsonResponse = ($encode) ? json_encode($data, $options) : $data;
+
+        $this->response()
+             ->status($code)
+             ->header('application/json')
+             ->body($jsonResponse)
+             ->send();
     }
 
-    public static function createResponse(
-        string $body = "",
-        array $headers = []
-    ): HttpResponse {
-        $response = new HttpResponse;
+    public function response() {
+        return $this;
+    }
 
-        if (isset($body)) {
-            $response->setBody($body);
+    public function status($code = null) {
+        if ($code === null) {
+            return $this->status;
         }
 
-        if (isset($headers)) {
-            foreach ($headers as $key => $value) {
-                if (is_int($key) && is_string($value)) {
-                    $response->setStatus($key);
-                    $response->setHeader($value);
-                }
+        if (array_key_exists($code, self::HTTP_CODES)) {
+            $this->status = $code;
+        }
+        else {
+            throw new \Exception('Invalid status code.');
+        }
+
+        return $this;
+    }
+
+    public function header($name, $value = null) {
+        if (is_array($name)) {
+            foreach ($name as $k => $v) {
+                $this->headers[$k] = $v;
             }
-
-            $response->setStatus(0);
+        }
+        else {
+            $this->headers[$name] = $value;
         }
 
-        return $response;
+        return $this;
+    }
+
+    public function body($str) {
+        $this->body .= $str;
+
+        return $this;
+    }
+
+    public static function createResponse($data,
+                                          $code = 200,
+                                          $encode = true,
+                                          $charset = 'utf-8',
+                                          $options = 0): HttpResponse {
+        return new HttpResponse($data, $code, $encode, $charset, $options);
     }
 
     public function send(): int
@@ -69,23 +113,6 @@ class HttpResponse extends Response
     public function setHeader(string $msg): void
     {
         $this->headers[$this->status] = $msg;
-    }
-
-    protected function setDefaultHeaders(): void
-    {
-        $this->headers = array(
-            200 => "OK",
-            301 => "Moved Permanently",
-            400 => "Bad Request",
-            401 => "Unauthorized",
-            403 => "Forbidden",
-            404 => "Not Found",
-            405 => "Method Not Allowed",
-            408 => "Request Timeout",
-            500 => "Internal Server Error",
-            502 => "Bad Gateway",
-            504 => "Gateway Timeout",
-        );
     }
 
     public function getBody(): string

@@ -4,6 +4,7 @@ namespace Quetzal\User\Controllers;
 
 use Quetzal\Core\Controller;
 use Quetzal\Core\Database\Models\Repository;
+use Quetzal\Core\Http\HttpResponse;
 use Quetzal\User\Models\Picture\PictureRepository;
 
 class MainController extends Controller
@@ -23,8 +24,9 @@ class MainController extends Controller
 
     public function pictures() {
         $pictures = $this->pictureRepository->findAll();
-        header('Content-type: application/json');
-        echo json_encode( ['pictures' => $pictures] );
-        return 1;
+//        header('Content-type: application/json');
+//        echo json_encode( ['pictures' => $pictures] );
+//        return 1;
+        return new HttpResponse(['pictures' => $pictures]);
     }
 }

@@ -50,7 +50,7 @@ class HttpRequest extends Request
         return $this->status;
     }
 
-    public function setStatus(int $status): void
+    public function setStatus($status): void
     {
         $this->status = $status;
     }
