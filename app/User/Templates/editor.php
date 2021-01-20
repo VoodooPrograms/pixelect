@@ -9,7 +9,7 @@ Pixelect - editor
 <?php $vs->template->endblock() ?>
 
 <?php $vs->template->startblock('scripts');?>
-<script src=<?php $vs->assets('js/editor.js'); ?>></script>
+<script src=<?php $vs->assets('js/editor/editor.js'); ?>></script>
 
 <script>
     document.querySelector("div")
