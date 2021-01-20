@@ -29,9 +29,19 @@ Pixelect - main page
     </div>
     <main class="col-10">
         <div class="contests">
+            <p><?php echo $contest->getTitle(); ?></p>
+            <p><?php echo $contest->getDetails(); ?></p>
+            <p><?php echo $contest->getStartingDate(); ?></p>
+            <p><?php echo $contest->getEndingDate(); ?></p>
+            <p><?php echo $contest->getFirstPlace() ?? 'Unknown'; ?></p>
+            <p><?php echo $contest->getSecondPlace() ?? 'Unknown'; ?></p>
+            <p><?php echo $contest->getThirdPlace() ?? 'Unknown'; ?></p>
+        </div>
 
-            </form>
-            <?php var_dump($contest); ?>
+        <div class="gallery">
+            <div class="gallery-column"></div>
+            <div class="gallery-column"></div>
+            <div class="gallery-column"></div>
         </div>
     </main>
 </div>
@@ -46,6 +56,13 @@ Pixelect - main page
         menu.classList.toggle('show');
         menuButton.classList.toggle('show');
     });
+</script>
+
+<script src=/app/User/Public/js/editor/editor.js></script>
+<script src=/app/User/Public/js/contestPictures.js></script>
+
+<script>
+    fetchCall('http://localhost:8080/contests/pictures/<?php echo $contest->getId(); ?>');
 </script>
 
 <?php $vs->template->endblock();?>

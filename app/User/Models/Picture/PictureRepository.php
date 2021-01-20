@@ -28,6 +28,22 @@ class PictureRepository extends Repository
         return $stmt->fetchAll(\PDO::FETCH_CLASS, Picture::class);
     }
 
+    public function findContestPictures(int $contest_id) {
+        $stmt = $this->conn->prepare('
+            SELECT
+                   pictures.*,
+                   (SELECT count(*) FROM contest_likes WHERE contest_likes.contest_id = pictures.id) as likes
+            FROM contest_likes
+                     LEFT JOIN pictures ON contest_likes.id = pictures.id
+            WHERE contest_likes.contest_id = :id
+        ');
+        $stmt->bindValue(':id', $contest_id);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, Picture::class);
+    }
+
     public function update(array $data, int $id)
     {
         // TODO: Implement update() method.

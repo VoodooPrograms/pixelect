@@ -251,6 +251,9 @@ main {
     border-style: solid;
     border-color: black;
     padding: 0.5em;
+    text-decoration: none;
+    color: black;
+    display: block;
 }
 
 .contest-box:first-child {

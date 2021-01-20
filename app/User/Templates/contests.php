@@ -39,14 +39,14 @@ Pixelect - main page
                 <input type="submit" value="Add Contest">
             </form>
         <?php foreach ($contests as $contest) : ?>
-            <div class="contest-box">
+            <a class="contest-box" href="/contests/<?php echo $contest->getId(); ?>">
                 <h3><?php echo $contest->getTitle(); ?></h3>
                 <p><?php echo $contest->getDetails(); ?></p>
                 <p>Starting date: <?php echo $contest->getStartingDate(); ?></p>
                 <p>Ending date: <?php echo $contest->getEndingDate(); ?></p>
                 <p>All likes: <?php echo $contest->getLikes(); ?></p>
                 <p>All pictures: <?php echo $contest->getPictures(); ?></p>
-            </div>
+            </a>
         <?php endforeach; ?>
         </div>
     </main>

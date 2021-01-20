@@ -95,6 +95,12 @@ routing:
         action: show
         method: GET
         guard: auth
+    contest-pictures:
+        path: /contests/pictures/{Number}
+        class: Quetzal\User\Controllers\ContestController
+        action: indexByContest
+        method: GET
+        guard: auth
     contests-add:
         path: /contests
         class: Quetzal\User\Controllers\ContestController
