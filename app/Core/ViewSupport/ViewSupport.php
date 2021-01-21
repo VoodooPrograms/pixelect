@@ -21,7 +21,7 @@ class ViewSupport
     public function assets(string $asset) {
         $asset_path = $this->registry->getSettingsManager()['config']['config']['assets_path'] . $asset;
         if (file_exists($asset_path)) {
-            echo $asset_path;
+            echo '/'.$asset_path;
         } else {
             throw new AppException("Can not load asset under " . $asset_path);
         }

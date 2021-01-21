@@ -91,10 +91,11 @@ body {
 
 .col-2 {
     grid-column: 1 / span 2;
+    width: calc(100vw / 6);
 }
 
 .col-10 {
-    grid-column: 4 / span 9;
+    grid-column: 3 / span 10;
 }
 
 nav {
@@ -341,6 +342,7 @@ canvas {
     .col-2 {
         grid-column: 1 / span 12;
         grid-row: 1;
+        width: 100vw;
     }
 
     .col-10 {
@@ -364,12 +366,16 @@ canvas {
     }
 
     .gallery-column {
-        width: 90%;
+        width: 100%;
         margin: 10px 0;
     }
 
     .gallery-column img {
         width: 100%;
+    }
+
+    .contests {
+        width: 100vw;
     }
 
     canvas {

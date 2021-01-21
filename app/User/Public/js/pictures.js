@@ -1,28 +1,31 @@
-fetch('http://localhost:8080/pictures/all', {
-    method: 'GET'
-})
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
 
-        const columns = document.querySelectorAll('.gallery-column');
-        let columnIndex = 0;
-        data.pictures.forEach((picture) => {
-            let pictureImg = createPictureElement(picture);
-            let thumbImg = createThumbElement(picture.likes, picture.id);
-            let item = document.createElement('div');
-            item.classList.add('gallery-item');
-
-            item.appendChild(pictureImg);
-            item.appendChild(thumbImg);
-            columns[columnIndex].appendChild(item);
-            columnIndex++;
-            if (columnIndex >= columns.length) columnIndex = 0;
-        })
+function fetchCall(endpoint) {
+    fetch(endpoint, {
+        method: 'GET'
     })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+
+            const columns = document.querySelectorAll('.gallery-column');
+            let columnIndex = 0;
+            data.pictures.forEach((picture) => {
+                let pictureImg = createPictureElement(picture);
+                let thumbImg = createThumbElement(picture.likes, picture.id);
+                let item = document.createElement('div');
+                item.classList.add('gallery-item');
+
+                item.appendChild(pictureImg);
+                item.appendChild(thumbImg);
+                columns[columnIndex].appendChild(item);
+                columnIndex++;
+                if (columnIndex >= columns.length) columnIndex = 0;
+            })
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
 
 function createPictureElement(pictureData) {
     let canvas = elt("canvas");
@@ -40,7 +43,7 @@ function createThumbElement(thumbs, picture_id) {
     let heartImg = document.createElement('img')
     let thumb = document.createElement('span')
 
-    heartImg.src = 'app/User/Public/assets/icons/heart.svg'
+    heartImg.src = '/app/User/Public/assets/icons/heart.svg'
     thumb.innerHTML = thumbs;
 
     heartImg.classList.add('picture-hearts-icon');

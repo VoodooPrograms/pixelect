@@ -26,4 +26,21 @@ class UserRepository extends Repository
         }
         return new User($stmt->fetch());
     }
+
+    public function findUserById(int $id) {
+        $stmt = $this->conn->prepare('
+            SELECT count(*) as likes, users.*
+            FROM likes
+                     LEFT JOIN users ON users.id = likes.user_id
+            WHERE users.id = :id
+            GROUP BY users.id
+        ');
+
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        if (!$stmt->rowCount()) {
+            return null;
+        }
+        return new User($stmt->fetch());
+    }
 }

@@ -15,10 +15,10 @@ Pixelect - main page
         </div>
         <div class="profile">
             <img src="app/User/Public/assets/icons/trophy.svg" class="profile-image" />
-            <div class="profile-name">Bartosz</div>
+            <div class="profile-name"></div>
             <div class="profile-buttons">
-                <a href="#" class="profile-likes"><img src="app/User/Public/assets/icons/heart.svg" />621</a>
-                <a href="#" class="profile-wins"><img src="app/User/Public/assets/icons/trophy.svg" />3</a>
+                <a class="profile-likes"><img src="app/User/Public/assets/icons/heart.svg" /></a>
+                <a class="profile-wins"><img src="app/User/Public/assets/icons/trophy.svg" />3</a>
                 <a href="/profile" class="profile-go-to"><img src="app/User/Public/assets/icons/user.svg" /></a>
                 <a href="/logout" class="profile-logout"><img src="app/User/Public/assets/icons/logout.svg" /></a>
             </div>
@@ -55,14 +55,9 @@ Pixelect - main page
 
 <?php $vs->template->startblock('scripts');?>
 
-<script>
-    const menuButton = document.getElementById('menu-button');
-    const menu = document.querySelector('nav');
-    menuButton.addEventListener('click', () => {
-        menu.classList.toggle('show');
-        menuButton.classList.toggle('show');
-    });
-</script>
+
+<script src=<?php $vs->assets('js/hamburger.js'); ?>></script>
+<script src=<?php $vs->assets('js/userLikes.js'); ?>></script>
 
 <?php $vs->template->endblock();?>
 

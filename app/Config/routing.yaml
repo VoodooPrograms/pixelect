@@ -44,6 +44,12 @@ routing:
         action: store
         method: POST
         guard: auth
+    user-likes:
+        path: /user/likes
+        class: Quetzal\User\Controllers\UserController
+        action: getUserLikes
+        method: GET
+        guard: auth
     contests:
         path: /contests
         class: Quetzal\User\Controllers\ContestController

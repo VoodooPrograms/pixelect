@@ -12,7 +12,8 @@ class User extends Model
     protected string $email;
     protected string $password;
 
-    private $pictures;
+    protected $pictures;
+    protected $likes;
 
     public static function tableName(): string
     {
@@ -81,6 +82,22 @@ class User extends Model
     public function setPassword(string $password): void
     {
         $this->password = $password;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLikes()
+    {
+        return $this->likes;
+    }
+
+    /**
+     * @param mixed $likes
+     */
+    public function setLikes($likes): void
+    {
+        $this->likes = $likes;
     }
 
 }
