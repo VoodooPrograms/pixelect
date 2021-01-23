@@ -42,6 +42,7 @@
     padding: 15px;
     box-sizing: border-box;
     font-size: 14px;
+    height: 2.8rem;
 }
 .form button {
     font-family: "Roboto", sans-serif;
@@ -176,6 +177,7 @@ main {
 
 .profile-name {
     font-size: 2em;
+    line-height: 2em;
 }
 
 .profile-buttons {
@@ -241,6 +243,26 @@ main {
 }
 
 
+.contests-add {
+    display: flex;
+    margin-bottom: 2em;
+}
+
+.contests-add-info {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5%;
+    padding: 1em;
+    /*text-transform: uppercase;*/
+    font-size: 2em;
+    color: var(--main-color);
+}
+
+.contests-add-form {
+    width: 50%;
+}
 
 .contests {
     width: 950px;
@@ -257,21 +279,37 @@ main {
     display: block;
 }
 
-.contest-box:first-child {
+.contest-box:nth-of-type(1) {
     border-radius: 1em 1em 0 0;
     border-width: 1px 1px 1px 1px;
+}
+
+a.contest-box:hover {
+    background-color: #b3b3b3;
+    transition: 0.3s;
 }
 
 .contest-box h3 {
     font-size: 2em;
     padding: 0.5em 0;
+    color: black;
 }
 
+
+.contest-box-icons {
+    padding: 0.5em 0;
+    display: flex;
+    flex-wrap: wrap;
+}
 
 .contest-box p {
     font-size: 1.2em;
+    flex: 0 50%;
 }
 
+.contest-box p img {
+    width: 1em;
+}
 
 
 
@@ -376,6 +414,18 @@ canvas {
 
     .contests {
         width: 100vw;
+    }
+
+    .contests-add {
+        flex-direction: column;
+    }
+
+    .contests-add-info {
+        width: 100%;
+    }
+
+    .contests-add-form {
+        width: 100%;
     }
 
     canvas {

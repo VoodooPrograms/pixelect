@@ -29,13 +29,19 @@ Pixelect - main page
     </div>
     <main class="col-10">
         <div class="contests">
-            <p><?php echo $contest->getTitle(); ?></p>
-            <p><?php echo $contest->getDetails(); ?></p>
-            <p><?php echo $contest->getStartingDate(); ?></p>
-            <p><?php echo $contest->getEndingDate(); ?></p>
-            <p><?php echo $contest->getFirstPlace() ?? 'Unknown'; ?></p>
-            <p><?php echo $contest->getSecondPlace() ?? 'Unknown'; ?></p>
-            <p><?php echo $contest->getThirdPlace() ?? 'Unknown'; ?></p>
+            <div class="contest-box">
+                <h3><?php echo $contest->getTitle(); ?></h3>
+                <p><?php echo $contest->getDetails(); ?></p>
+                <div class="contest-box-icons">
+                    <p><img src="<?php echo $vs->assets('assets/icons/start-flag.svg'); ?>" /> <?php echo $contest->getStartingDate(); ?></p>
+                    <p><img src="<?php echo $vs->assets('assets/icons/heart.svg'); ?>" /> <?php echo $contest->getLikes(); ?></p>
+                    <p><img src="<?php echo $vs->assets('assets/icons/finish-flag.svg'); ?>" /> <?php echo $contest->getEndingDate(); ?></p>
+                    <p><img src="<?php echo $vs->assets('assets/icons/gallery-layout.svg'); ?>" /> <?php echo $contest->getPictures(); ?></p>
+                    <p><img src="<?php echo $vs->assets('assets/icons/first-place.svg'); ?>" /><?php echo $contest->getFirstPlace() ?? 'Unknown'; ?></p>
+                    <p><img src="<?php echo $vs->assets('assets/icons/second-place.svg'); ?>" /><?php echo $contest->getSecondPlace() ?? 'Unknown'; ?></p>
+                    <p><img src="<?php echo $vs->assets('assets/icons/third-place.svg'); ?>" /><?php echo $contest->getThirdPlace() ?? 'Unknown'; ?></p>
+                </div>
+            </div>
         </div>
 
         <div class="gallery">
