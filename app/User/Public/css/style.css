@@ -197,6 +197,30 @@ main {
 
 
 
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader {
+    z-index: 1;
+    width: 80px;
+    height: 80px;
+    position: relative;
+    top: calc(50vh - 120px);
+    left: calc(50%);
+    opacity: 1;
+    transition: 0.4s;
+    border: 14px solid whitesmoke;
+    border-radius: 50%;
+    border-top: 14px solid var(--main-color);
+    animation: spin 2s linear infinite;
+}
+
+.loader-off {
+    opacity: 0;
+}
+
 .gallery {
     display: flex;
     width: 1200px;

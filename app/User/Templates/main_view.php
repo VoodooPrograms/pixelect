@@ -28,6 +28,7 @@
         <img src="app/User/Public/assets/icons/hamburger.svg" />
     </div>
     <main class="col-10">
+        <div class="loader"></div>
         <div class="gallery">
             <div class="gallery-column"></div>
             <div class="gallery-column"></div>

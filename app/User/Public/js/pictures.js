@@ -7,6 +7,9 @@ function fetchCall(endpoint) {
         .then(data => {
             console.log('Success:', data);
 
+            const loader = document.querySelector('.loader');
+            loader.classList.toggle('loader-off');
+
             const columns = document.querySelectorAll('.gallery-column');
             let columnIndex = 0;
             data.pictures.forEach((picture) => {

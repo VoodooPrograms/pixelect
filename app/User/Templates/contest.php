@@ -44,6 +44,7 @@ Pixelect - main page
             </div>
         </div>
 
+        <div class="loader"></div>
         <div class="gallery">
             <div class="gallery-column"></div>
             <div class="gallery-column"></div>
