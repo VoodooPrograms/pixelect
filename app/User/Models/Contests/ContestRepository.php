@@ -2,7 +2,6 @@
 
 namespace Quetzal\User\Models\Contests;
 
-use Quetzal\Core\Database\Models\Model;
 use Quetzal\Core\Database\Models\Repository;
 
 class ContestRepository extends Repository
@@ -32,9 +31,14 @@ class ContestRepository extends Repository
 
     public function findById(int $id) {
         $stmt = $this->conn->prepare('
-            SELECT contests.*
+            SELECT contests.*,
+                (SELECT count(*) FROM contest_likes WHERE contest_likes.contest_id = contests.id) as likes,
+                (SELECT count(*) FROM contest_pictures WHERE contest_pictures.contest_id = contests.id) as pictures
             FROM contests
+                LEFT JOIN contest_likes ON contests.id = contest_likes.contest_id
+                LEFT JOIN contest_pictures ON contests.id = contest_pictures.contest_id
             WHERE contests.id = :id
+            GROUP BY contests.id;
         ');
         $stmt->bindValue(':id', $id);
 

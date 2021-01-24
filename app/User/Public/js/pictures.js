@@ -1,6 +1,6 @@
 
-function fetchCall(endpoint) {
-    fetch(endpoint, {
+async function fetchCall(endpoint) {
+    await fetch(endpoint, {
         method: 'GET'
     })
         .then(response => response.json())
@@ -8,7 +8,7 @@ function fetchCall(endpoint) {
             console.log('Success:', data);
 
             const loader = document.querySelector('.loader');
-            loader.classList.toggle('loader-off');
+            loader.classList.add('loader-off');
 
             const columns = document.querySelectorAll('.gallery-column');
             let columnIndex = 0;
