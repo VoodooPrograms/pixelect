@@ -28,4 +28,13 @@ class MainController extends Controller
         $pictures = $this->pictureRepository->findAll();
         return new HttpResponse(['pictures' => $pictures]);
     }
+
+    public function show() {
+        return $this->render('my_work.php');
+    }
+
+    public function userPictures() {
+        $pictures = $this->pictureRepository->findPicturesOfUser(Guard::id());
+        return new HttpResponse(['pictures' => $pictures]);
+    }
 }

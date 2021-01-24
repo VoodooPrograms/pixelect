@@ -74,6 +74,18 @@ routing:
         action: store
         method: POST
         guard: auth
+    my-work:
+        path: /my-work
+        class: Quetzal\User\Controllers\MainController
+        action: show
+        method: GET
+        guard: auth
+    my-work-pictures:
+        path: /user/pictures
+        class: Quetzal\User\Controllers\MainController
+        action: userPictures
+        method: GET
+        guard: auth
     pixel-editor:
         path: /pixel-editor
         class: Quetzal\User\Controllers\PixelEditorController

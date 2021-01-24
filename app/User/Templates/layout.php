@@ -12,6 +12,7 @@ Pixelect - main page
             <a href="/pixel-editor"><img src=<?php echo $vs->assets('assets/icons/big-paint-brush.svg'); ?> />Draw</a>
             <a href="/main"><img src=<?php echo $vs->assets('assets/icons/gallery-layout.svg'); ?> />Gallery</a>
             <a href="/contests"><img src=<?php echo $vs->assets('assets/icons/success.svg'); ?> />Challenges</a>
+            <a href="/my-work"><img src=<?php echo $vs->assets('assets/icons/success.svg'); ?> />My Pictures</a>
         </div>
         <div class="profile">
             <img src=<?php echo $vs->assets('assets/icons/trophy.svg'); ?> class="profile-image" />
