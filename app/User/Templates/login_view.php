@@ -5,6 +5,7 @@
 <?php $vs->template->endblock() ?>
 
 <?php $vs->template->startblock('content') ?>
+<div class="full-screen">
     <div class="logo">
         <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="svg360122" viewBox="210 192 600 300" height="25%" width="50%" version="1.1">
             <g id="logo-group">
@@ -51,6 +52,7 @@
             </div>
         </div>
     </div>
+</div>
 <?php $vs->template->endblock() ?>
 
 <?php $vs->template->startblock('scripts');?>

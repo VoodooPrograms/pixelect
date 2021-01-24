@@ -3,17 +3,16 @@
 namespace Quetzal\User\Models\User;
 
 use Quetzal\Core\Database\Models\Model;
-use Quetzal\User\Models\Picture\Picture;
 
 class User extends Model
 {
-    protected int $id;
+    public int $id;
     protected string $name;
     protected string $email;
     protected string $password;
 
-    protected $pictures;
-    protected $likes;
+    public $pictures;
+    public $likes;
 
     public static function tableName(): string
     {

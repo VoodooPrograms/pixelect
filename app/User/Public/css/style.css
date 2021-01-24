@@ -13,10 +13,21 @@
     --black: #050401;
 }
 
+body {
+    font-family: "Roboto", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.full-screen {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(310deg, rgba(150,52,132,1) 0%, rgba(9,9,121,1) 100%);
+}
+
 .logo {
     text-align: center;
 }
-
 .login-page {
     width: 360px;
     padding: 5% 0 0;
@@ -69,6 +80,7 @@
     color: var(--secondary-color);
     text-decoration: none;
 }
+
 .form .register-form {
     display: none;
 }
@@ -76,13 +88,6 @@
 .alert {
     color: #f44336;
     margin-top: 10px;
-}
-
-body {
-    background: linear-gradient(310deg, rgba(150,52,132,1) 0%, rgba(9,9,121,1) 100%);
-    font-family: "Roboto", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 
@@ -337,8 +342,11 @@ a.contest-box:hover {
 }
 
 
-
-
+.canvas-box {
+    background-color: var(--text-color);
+    width: 100vw;
+    height: 100vh;
+}
 
 canvas {
     position: absolute;
@@ -346,6 +354,7 @@ canvas {
     left: 0;
     top: 10%;
     right: 0;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
 .tool-button-collection {

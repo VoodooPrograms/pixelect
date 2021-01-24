@@ -23,7 +23,6 @@ class Picture {
 function elt(type, props, ...children) {
     let dom = document.createElement(type);
     if (props) Object.assign(dom, props);
-    console.debug(children);
     for (let child of children) {
         if (typeof child != "string") dom.appendChild(child);
         else dom.appendChild(document.createTextNode(child));

@@ -5,7 +5,7 @@ Pixelect - editor
 <?php $vs->template->endblock() ?>
 
 <?php $vs->template->startblock('content') ?>
-    <div></div>
+    <div class="canvas-box"></div>
 <?php $vs->template->endblock() ?>
 
 <?php $vs->template->startblock('scripts');?>

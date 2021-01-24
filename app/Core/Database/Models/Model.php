@@ -5,6 +5,7 @@ namespace Quetzal\Core\Database\Models;
 use JsonSerializable;
 use Quetzal\Core\Database\Utils\Collection;
 use Quetzal\Core\Register;
+use ReflectionProperty;
 
 abstract class Model implements JsonSerializable
 {
@@ -33,7 +34,13 @@ abstract class Model implements JsonSerializable
 
     public function save() {
         $tableName = $this->tableName();
-        $attributes = get_object_vars($this);
+        $class = new \ReflectionClass($this);
+
+        foreach ($class->getProperties(ReflectionProperty::IS_PROTECTED) as $reflectionProperty){
+            $propertyName = $reflectionProperty->getName();
+            $attributes[$reflectionProperty->getName()] = $this->$propertyName ?? null;
+        }
+
         $params = array_map(fn($attr) => ":$attr", array_keys($attributes));
 
         $reg = Register::instance();

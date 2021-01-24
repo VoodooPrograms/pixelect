@@ -29,15 +29,16 @@ class UserRepository extends Repository
 
     public function findUserById(int $id) {
         $stmt = $this->conn->prepare('
-            SELECT count(*) as likes, users.*
-            FROM likes
-                     LEFT JOIN users ON users.id = likes.user_id
+            SELECT users.*, (SELECT count(*) FROM likes WHERE likes.user_id = :id) as likes
+            FROM users
+                     LEFT JOIN likes ON users.id = likes.user_id
             WHERE users.id = :id
             GROUP BY users.id
         ');
 
         $stmt->bindValue(':id', $id);
         $stmt->execute();
+
         if (!$stmt->rowCount()) {
             return null;
         }
