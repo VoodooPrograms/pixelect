@@ -23,6 +23,7 @@ class Picture {
 function elt(type, props, ...children) {
     let dom = document.createElement(type);
     if (props) Object.assign(dom, props);
+    console.debug(children);
     for (let child of children) {
         if (typeof child != "string") dom.appendChild(child);
         else dom.appendChild(document.createTextNode(child));
@@ -130,21 +131,25 @@ class PixelEditor {
 }
 
 class ToolSelect {
-    constructor(state, {tools, dispatch}) {
+    constructor(state , {tools , dispatch}) {
         this.select = [];
         for (let tool in tools) {
             this.select.push(elt("div", {
-                classList: 'tool-button icon ' + tool + '-icon',
-                value: tool,
-                onclick: function() {
-                    dispatch({tool: this.value})
-                    console.log(this.value);
+                    classList: 'tool-button icon ' + tool + '-icon tooltip' ,
+                    value: tool ,
+                    onclick: function () {
+                        dispatch({tool: this.value})
+                        console.log(this.value);
+                    }
                 }
-            }));
+            ));
         }
         this.dom = this.select;
     }
-    syncState(state) { this.select.value = state.tool; }
+
+    syncState(state) {
+        this.select.value = state.tool;
+    }
 }
 
 class ColorSelect {
@@ -214,7 +219,7 @@ class SaveButton {
     constructor(state) {
         this.picture = state.picture;
         this.dom = elt("div", {
-            classList: 'tool-button icon save-icon',
+            classList: 'tool-button icon save-icon tooltip',
             onclick: () => this.save()
         });
     }
@@ -248,7 +253,7 @@ class LoadButton {
     constructor(state, {dispatch}) {
         this.picture = state.picture;
         this.dom = elt("div", {
-            classList: 'tool-button icon load-icon',
+            classList: 'tool-button icon load-icon tooltip',
             onclick: () => this.startLoad({dispatch})
         });
     }
@@ -331,7 +336,7 @@ function historyUpdateState(state, action) {
 class UndoButton {
     constructor(state, {dispatch}) {
         this.dom = elt("div", {
-            classList: 'tool-button icon undo-icon',
+            classList: 'tool-button icon undo-icon tooltip',
             onclick: () => dispatch({undo: true}),
             disabled: state.done.length === 0
         });
@@ -371,6 +376,25 @@ function pictureSizeHeight() {
     return pictureHeight;
 }
 
+const tooltips = [
+    'Drawing a pixel',
+    'Fill area',
+    'Drawing a rectangle',
+    'Pick a color',
+    'Save as .png',
+    'Save on server',
+    'Undo',
+]
+
+function eltTooltips(app) {
+    const buttons = app.dom.querySelectorAll(':not(canvas)');
+    buttons.forEach((button, index) => {
+        button.appendChild(elt('span', {
+            classList: 'tooltiptext',
+            innerHTML: tooltips[index-2]
+        }));
+    });
+}
 
 function startPixelEditor({state = startState,
                               tools = baseTools,
@@ -386,6 +410,9 @@ function startPixelEditor({state = startState,
     app.dom.appendChild(elt('div', {
         classList: 'tool-button-collection',
     }, ...app.dom.querySelectorAll(':not(canvas)')));
+
+    eltTooltips(app);
+
     return app.dom;
 }
   
