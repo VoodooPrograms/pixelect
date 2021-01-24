@@ -273,45 +273,6 @@ class LoadButton {
     syncState(state) { this.picture = state.picture; }
 }
 
-// function startLoad() {
-//     const data = { username: 'example' };
-//     let canvas = elt("canvas");
-//     drawPicture(state.picture, canvas, scale);
-//     let link = elt("a", {
-//         href: canvas.toDataURL(),
-//         download: this.generateFileName()
-//     });
-//     document.body.appendChild(link);
-//     link.click();
-//     link.remove();
-//
-//
-//     fetch('http://localhost:8080/pixel-editor/save', {
-//         method: 'POST', // or 'PUT'
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(data),
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//             console.log('Success:', data);
-//         })
-//         .catch((error) => {
-//             console.error('Error:', error);
-//         });
-// }
-
-// function startLoad(dispatch) {
-//     let input = elt("input", {
-//         type: "file",
-//         onchange: () => finishLoad(input.files[0], dispatch)
-//     });
-//     document.body.appendChild(input);
-//     input.click();
-//     input.remove();
-// }
-
 function finishLoad(file, dispatch) {
     if (file == null) return;
     let reader = new FileReader();

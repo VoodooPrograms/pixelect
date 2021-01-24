@@ -32,9 +32,7 @@ abstract class Rule
 
     public function validate(array $data)
     {
-//        var_dump($data);
         foreach ($data as $attribute => $value) {
-//            var_dump($this->rules()[$attribute]);
             if (isset($this->rules()[$attribute])) {
                 foreach ($this->rules()[$attribute] as $rule) {
                     $ruleName = $rule;
